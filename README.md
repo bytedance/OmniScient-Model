@@ -55,7 +55,17 @@ Dataset preparsion, training scripts, evaluation scripts will be released in the
 </tbody>
 </table>
 
+## Visual Results
 
+<div align="center">
+  <img src="imgs/vis.png" width="100%" height="100%"/>
+</div><br/>
+<div align="center">
+  <img src="imgs/vis2.png" width="100%" height="100%"/>
+</div><br/>
+<div align="center">
+  <img src="imgs/vis3.png" width="100%" height="100%"/>
+</div><br/>
 
 ## <a name="Citing OSM"></a>Citing OSM
 
