@@ -32,7 +32,7 @@ pip install -r requirments.txt
 
 We provide examples applying OSM on top of an off-the-shelf segmenter (e.g., SAM), illustrating playing with OSM in a segment and recognize anything mode in [demo_with_sam.py](./demo_with_sam.py), or in an interactive model in [interactive_demo.ipynb](./interactive_demo.ipynb).
 
-Dataset preparsion, training scripts, evaluation scripts will be released in the near future.
+Dataset preparation, training scripts, evaluation scripts will be released in the near future.
 
 ## Model Zoo
 
