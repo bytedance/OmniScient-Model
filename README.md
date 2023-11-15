@@ -1,6 +1,6 @@
 # OmniScient-Model
  
-This repo contains the code for our paper [**Towards Open-Ended Visual Recognition with Large Language Model**]()
+This repo contains the code for our paper [**Towards Open-Ended Visual Recognition with Large Language Model**](https://arxiv.org/abs/2311.08400)
 
 <div align="center">
   <img src="imgs/task.png" width="80%" height="80%"/>
@@ -75,7 +75,7 @@ If you use OSM in your research, please use the following BibTeX entry.
 @inproceedings{yu2023towards,
   title={Towards Open-Ended Visual Recognition with Large Language Model},
   author={Qihang Yu and Xiaohui Shen and Liang-Chieh Chen},
-  booktitle={arxiv},
+  booktitle={arxiv: 2311.08400},
   year={2023}
 }
 ```
