@@ -17,7 +17,7 @@ limitations under the License.
 import torch
 from torch import nn
 import torch.nn.functional as F
-
+from timm.models.layers import trunc_normal_
 
 class OmniScientModel(nn.Module):
     def __init__(self, base_model, input_size=1120, sliding_window_size=224, sliding_window_stride=224,
@@ -41,6 +41,8 @@ class OmniScientModel(nn.Module):
         self.window_pos_embed = nn.Parameter(torch.randn(1, (input_size // backbone_output_stride) ** 2 + self.num_cls_tokens, backbone_output_channel))
 
         self.mask_query = nn.Parameter(torch.randn(1, 32, maskqformer_channel))
+        trunc_normal_(self.mask_query, std=1.0)
+        self.copy_weight_for_mask_query_tokens()
         self.context_query = self.base_model.query_tokens
 
         self.all_datasets = ["coco", "lvis", "v3det", "a847", "pc459", "partimagenet",
@@ -50,6 +52,12 @@ class OmniScientModel(nn.Module):
         for k in self.all_datasets:
             self.qformer_mode_query[k] = nn.Parameter(torch.randn(1, 1, maskqformer_channel))
             self.mode_query[k] = nn.Parameter(torch.randn(1, 1, llm_channel))
+            trunc_normal_(self.qformer_mode_query[k], std=.02)
+            trunc_normal_(self.mode_query[k], std=.02)
+
+    @torch.no_grad()
+    def copy_weight_for_mask_query_tokens(self):
+        self.mask_query.copy_(self.base_model.query_tokens.detach())
 
     @torch.no_grad()
     def sliding_window_vit_forward(self,
@@ -126,7 +134,6 @@ class OmniScientModel(nn.Module):
         else:
             qformer_mode_query = self.qformer_mode_query[dataset_type]
 
-        qformer_mode_query = self.qformer_mode_query[dataset_type]
         qformer_mode_query = qformer_mode_query.expand(all_query.shape[0], -1, -1)
         all_query = torch.cat([all_query, qformer_mode_query], dim=1)
 

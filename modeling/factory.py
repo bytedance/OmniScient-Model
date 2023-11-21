@@ -19,9 +19,21 @@ from transformers import InstructBlipProcessor, InstructBlipForConditionalGenera
 import torch
 
 
-def create_model_and_transforms(base_model_name="Salesforce/instructblip-vicuna-7b"):
-    base_model = InstructBlipForConditionalGeneration.from_pretrained(base_model_name, low_cpu_mem_usage=True, torch_dtype=torch.float16)
-    model = OmniScientModel(base_model=base_model)
+def create_model_and_transforms(base_model_name="Salesforce/instructblip-vicuna-7b",
+                                input_size=1120, sliding_window_size=224, sliding_window_stride=224,
+                                backbone_output_stride=14, backbone_output_channel=1408, maskqformer_channel=768,
+                                llm_channel=4096):
+    base_model = InstructBlipForConditionalGeneration.from_pretrained(base_model_name, low_cpu_mem_usage=True)
+    model = OmniScientModel(
+        base_model=base_model,
+        input_size=input_size,
+        sliding_window_size=sliding_window_size,
+        sliding_window_stride=sliding_window_stride,
+        backbone_output_stride=backbone_output_stride,
+        backbone_output_channel=backbone_output_channel,
+        maskqformer_channel=maskqformer_channel,
+        llm_channel=llm_channel)
+
     processor = InstructBlipProcessor.from_pretrained(base_model_name)
     # Freeze all parameters
     model.requires_grad_(False)

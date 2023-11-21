@@ -93,7 +93,7 @@ lvis/
 Run the following commands to convert LVIS Instance dataset to wds format.
 ```bash
 python3 convert_lvis_to_wds.py \
-    --output_dir $SAVE_PATH/lvis_pan_wds \
+    --output_dir $SAVE_PATH/lvis_wds \
     --image_dir $DATA_PATH/lvis \
     --json_file $DATA_PATH/lvis/lvis_v1_train.json
 ```

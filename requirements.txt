@@ -19,3 +19,7 @@ opencv-python
 matplotlib
 onnxruntime
 onnx
+lvis
+timm
+git+https://github.com/facebookresearch/segment-anything.git
+git+https://github.com/cocodataset/panopticapi.git
