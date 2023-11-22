@@ -122,14 +122,16 @@ torchrun --nnodes=1 --nproc_per_node=8 --master_addr=127.0.0.1 --master_port=999
 Update the data path in [test/generate_pred.py](test/generate_pred.py), then run the following script for testing:
 ```bash
 GPU_COUNT=8  # Set your GPU count here
+CKPT_PATH="./osm_final.pt"  # Set your checkpoint path here
+RESULT_SAVE_PATH="osm_final"  # Set your result save path here
 
 for (( i=0; i<GPU_COUNT; i++ )); do
-    CUDA_VISIBLE_DEVICES=$i python3 test/generate_pred.py $i $GPU_COUNT ./osm_final.pt osm_final &
+    CUDA_VISIBLE_DEVICES=$i python3 test/generate_pred.py $i $GPU_COUNT $CKPT_PATH $RESULT_SAVE_PATH &
 done
 
 wait # This will wait for all the background jobs to finish
 
-python3 test/evaluate_pred.py osm_final $GPU_COUNT
+python3 test/evaluate_pred.py $RESULT_SAVE_PATH $GPU_COUNT
 
 ```
 
