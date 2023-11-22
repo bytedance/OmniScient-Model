@@ -31,9 +31,6 @@ pip install -r requirments.txt
 
 We provide examples applying OSM on top of an off-the-shelf segmenter (e.g., SAM), illustrating playing with OSM in a segment and recognize anything mode in [demo_with_sam.py](./demo_with_sam.py), or in an interactive model in [interactive_demo.ipynb](./interactive_demo.ipynb).
 
-Evaluation scripts will be released in the near future.
-
-
 ## Data Preparation
 
 Please refer to [Preparing Datasets for OSM](dataset_preparation/README.md).
@@ -118,6 +115,22 @@ torchrun --nnodes=1 --nproc_per_node=8 --master_addr=127.0.0.1 --master_port=999
   --learning_rate 4e-5 \
   --precision amp_bfloat16 \
   --gradient_accumulation_steps 4
+```
+
+## Testing
+
+Update the data path in [test/generate_pred.py](test/generate_pred.py), then run the following script for testing:
+```bash
+GPU_COUNT=8  # Set your GPU count here
+
+for (( i=0; i<GPU_COUNT; i++ )); do
+    CUDA_VISIBLE_DEVICES=$i python3 test/generate_pred.py $i $GPU_COUNT ./osm_final.pt osm_final &
+done
+
+wait # This will wait for all the background jobs to finish
+
+python3 test/evaluate_pred.py osm_final $GPU_COUNT
+
 ```
 
 ## Model Zoo
