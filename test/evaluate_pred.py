@@ -345,7 +345,7 @@ if __name__ == "__main__":
     import glob
     import sys
     save_path = str(sys.argv[1])
-    total_split = str(sys.argv[2])
+    total_split = int(sys.argv[2])
     coco_json_list = glob.glob(f"{save_path}/coco_pred_*_of_{total_split}.json")
     assert len(coco_json_list) == total_split
     parse_coco_panoptic(coco_json_list)
